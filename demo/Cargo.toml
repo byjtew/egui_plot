@@ -31,6 +31,7 @@ examples_utils.workspace = true
 animated_signal.workspace = true
 borrow_points.workspace = true
 box_plot.workspace = true
+candlestick_chart.workspace = true
 custom_axes.workspace = true
 custom_plot_manipulation.workspace = true
 electricity_grid.workspace = true

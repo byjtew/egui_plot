@@ -44,6 +44,7 @@ impl DemoGallery {
             Box::new(animated_signal::AnimatedSignalExample::default()),
             Box::new(borrow_points::BorrowPointsExample::default()),
             Box::new(box_plot::BoxPlotExample::default()),
+            Box::new(candlestick_chart::CandlestickChartExample::default()),
             Box::new(custom_axes::CustomAxesExample::default()),
             Box::new(custom_plot_manipulation::CustomPlotManipulationExample::default()),
             Box::new(electricity_grid::ElectricityGridExample::default()),

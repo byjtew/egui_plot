@@ -30,6 +30,7 @@ examples_utils = { version = "0.1.0", path = "examples_utils" }
 animated_signal = { version = "0.1.0", path = "examples/animated_signal" }
 borrow_points = { version = "0.1.0", path = "examples/borrow_points" }
 box_plot = { version = "0.1.0", path = "examples/box_plot" }
+candlestick_chart = { version = "0.1.0", path = "examples/candlestick_chart" }
 custom_axes = { version = "0.1.0", path = "examples/custom_axes" }
 custom_plot_manipulation = { version = "0.1.0", path = "examples/custom_plot_manipulation" }
 electricity_grid = { version = "0.1.0", path = "examples/electricity_grid" }

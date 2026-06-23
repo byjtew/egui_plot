@@ -689,6 +689,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "candlestick_chart"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
+
+[[package]]
 name = "cc"
 version = "1.2.48"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -920,6 +930,7 @@ dependencies = [
  "animated_signal",
  "borrow_points",
  "box_plot",
+ "candlestick_chart",
  "custom_axes",
  "custom_plot_manipulation",
  "eframe",
