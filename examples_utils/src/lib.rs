@@ -27,6 +27,13 @@ pub trait PlotExample {
 
     /// The controls for the example.
     fn show_controls(&mut self, ui: &mut egui::Ui) -> egui::Response;
+
+    /// Whether the example animates over time. When `true`, the screenshot test
+    /// also captures a short looping `animation.gif` (only when regenerating
+    /// snapshots, i.e. with `UPDATE_SNAPSHOTS` set).
+    fn animated(&self) -> bool {
+        false
+    }
 }
 
 #[doc(hidden)]
@@ -37,20 +44,25 @@ pub mod internal {
     use egui_kittest::Harness;
     use egui_kittest::SnapshotOptions;
 
-    pub fn run_screenshot_test<State>(builder: impl Fn(&mut eframe::CreationContext<'_>) -> State, manifest_dir: &str)
-    where
+    pub fn run_screenshot_test<State>(
+        builder: impl Fn(&mut eframe::CreationContext<'_>) -> State,
+        manifest_dir: &str,
+        animated: bool,
+    ) where
         State: eframe::App,
     {
         let output_path = PathBuf::from(manifest_dir);
         let options = SnapshotOptions::new()
             .threshold(2.0)
             .failed_pixel_count_threshold(5)
-            .output_path(output_path);
+            .output_path(output_path.clone());
 
         // Generate main screenshot
         let mut harness = Harness::builder()
             .with_size(egui::Vec2::new(800.0, 800.0))
             .build_eframe(&builder);
+        // `run_ok` (not `run`) so a continuously-repainting example settles to a
+        // frame instead of panicking on the step limit.
         harness.run_ok();
         harness.snapshot_options("screenshot", &options);
 
@@ -60,6 +72,42 @@ pub mod internal {
             .build_eframe(&builder);
         thumb_harness.run_ok();
         let _ = thumb_harness.try_snapshot_options("screenshot_thumb", &options);
+
+        // Capturing every frame is wasted work on a normal test run, so the gif
+        // is only (re)generated alongside the other snapshots.
+        if animated && std::env::var("UPDATE_SNAPSHOTS").is_ok() {
+            capture_gif(&builder, &output_path.join("animation.gif"));
+        }
+    }
+
+    /// Step a fresh harness frame-by-frame into a looping ~1s gif. Each step
+    /// advances the app's own animation clock, so the gif reproduces the live
+    /// motion deterministically.
+    fn capture_gif<State>(builder: impl Fn(&mut eframe::CreationContext<'_>) -> State, path: &std::path::Path)
+    where
+        State: eframe::App,
+    {
+        const FRAMES: usize = 20;
+        const FPS: u32 = 20;
+        const SIZE: f32 = 400.0;
+
+        let mut harness = Harness::builder().with_size(egui::Vec2::splat(SIZE)).build_eframe(&builder);
+        let mut frames = Vec::with_capacity(FRAMES);
+        for _ in 0..FRAMES {
+            harness.step();
+            if let Ok(image) = harness.render() {
+                frames.push(image);
+            }
+        }
+
+        if let Ok(file) = std::fs::File::create(path) {
+            let mut encoder = image::codecs::gif::GifEncoder::new_with_speed(std::io::BufWriter::new(file), 10);
+            let _ = encoder.set_repeat(image::codecs::gif::Repeat::Infinite);
+            for image in frames {
+                let delay = image::Delay::from_numer_denom_ms(1000, FPS);
+                let _ = encoder.encode_frame(image::Frame::from_parts(image, 0, 0, delay));
+            }
+        }
     }
 }
 
@@ -127,16 +175,19 @@ macro_rules! make_main {
         #[cfg(all(test, not(target_arch = "wasm32")))]
         mod screenshot_tests {
             use super::AppWrapper;
+            use ::examples_utils::PlotExample as _;
 
             #[allow(non_snake_case)]
             #[test]
             fn $inner() {
+                let animated = AppWrapper::default().inner.animated();
                 ::examples_utils::internal::run_screenshot_test(
                     |_cc| AppWrapper {
                         plot_only: true,
                         ..Default::default()
                     },
                     env!("CARGO_MANIFEST_DIR"),
+                    animated,
                 );
             }
         }
