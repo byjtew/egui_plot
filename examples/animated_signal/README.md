@@ -23,3 +23,5 @@ per second, and therefore how fast the trace moves.
 ```bash
 cargo run -p animated_signal
 ```
+
+![](animation.gif)

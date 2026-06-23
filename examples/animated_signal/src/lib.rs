@@ -38,4 +38,8 @@ impl PlotExample for AnimatedSignalExample {
     fn show_controls(&mut self, ui: &mut egui::Ui) -> egui::Response {
         self.show_controls(ui)
     }
+
+    fn animated(&self) -> bool {
+        true
+    }
 }
