@@ -18,6 +18,10 @@ pub const TURBO_COLORMAP: [Color32; 10] = [
     Color32::from_rgb(122, 4, 2),
 ];
 
+/// Tick advanced per animated frame. At the default 5×5 grid one full period of
+/// the pattern spans 20 frames, matching the gif capture so it loops seamlessly.
+const TICK_STEP: f64 = std::f64::consts::PI / 2.0;
+
 pub struct HeatmapDemo {
     tick: f64,
     animate: bool,
@@ -31,7 +35,7 @@ impl Default for HeatmapDemo {
     fn default() -> Self {
         Self {
             tick: 0.0,
-            animate: false,
+            animate: true,
             show_labels: true,
             palette: TURBO_COLORMAP.to_vec(),
             rows: 5,
@@ -46,10 +50,6 @@ impl HeatmapDemo {
             ui.group(|ui| {
                 ui.vertical(|ui| {
                     ui.checkbox(&mut self.animate, "Animate");
-                    if self.animate {
-                        ui.request_repaint();
-                        self.tick += 1.0;
-                    }
                     ui.checkbox(&mut self.show_labels, "Show labels");
                 });
             });
@@ -82,8 +82,12 @@ impl HeatmapDemo {
         .response
     }
 
-    #[expect(clippy::needless_pass_by_ref_mut, reason = "to allow mutation of self")]
     pub fn show_plot(&mut self, ui: &mut egui::Ui) -> Response {
+        if self.animate {
+            self.tick += TICK_STEP;
+            ui.ctx().request_repaint();
+        }
+
         let mut values = Vec::new();
         for y in 0..self.rows {
             for x in 0..self.cols {

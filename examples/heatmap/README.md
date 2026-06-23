@@ -15,4 +15,4 @@ cd examples/heatmap
 trunk serve
 ```
 
-![](screenshot.png)
+![](animation.gif)
