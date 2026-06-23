@@ -27,10 +27,12 @@ opt-level = 2
 egui_plot = { version = "0.35.0", path = "egui_plot", default-features = false }
 examples_utils = { version = "0.1.0", path = "examples_utils" }
 
+animated_signal = { version = "0.1.0", path = "examples/animated_signal" }
 borrow_points = { version = "0.1.0", path = "examples/borrow_points" }
 box_plot = { version = "0.1.0", path = "examples/box_plot" }
 custom_axes = { version = "0.1.0", path = "examples/custom_axes" }
 custom_plot_manipulation = { version = "0.1.0", path = "examples/custom_plot_manipulation" }
+electricity_grid = { version = "0.1.0", path = "examples/electricity_grid" }
 filled_area = { version = "0.1.0", path = "examples/filled_area" }
 heatmap = { version = "0.1.0", path = "examples/heatmap" }
 histogram = { version = "0.1.0", path = "examples/histogram" }
@@ -44,7 +46,12 @@ markers = { version = "0.1.0", path = "examples/markers" }
 performance = { version = "0.1.0", path = "examples/performance" }
 plot_span = { version = "0.1.0", path = "examples/plot_span" }
 save_plot = { version = "0.1.0", path = "examples/save_plot" }
+scatterplot_matrix = { version = "0.1.0", path = "examples/scatterplot_matrix" }
 stacked_bar = { version = "0.1.0", path = "examples/stacked_bar" }
+stacked_horizontal_bar = { version = "0.1.0", path = "examples/stacked_horizontal_bar" }
+stacked_lines = { version = "0.1.0", path = "examples/stacked_lines" }
+tree_visualization = { version = "0.1.0", path = "examples/tree_visualization" }
+treemap = { version = "0.1.0", path = "examples/treemap" }
 
 ahash = { version = "0.8.12", default-features = false, features = [
     "no-rng", # we don't need DOS-protection, so we let users opt-in to it instead

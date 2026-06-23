@@ -51,14 +51,14 @@ pub mod internal {
         let mut harness = Harness::builder()
             .with_size(egui::Vec2::new(800.0, 800.0))
             .build_eframe(&builder);
-        harness.run();
+        harness.run_ok();
         harness.snapshot_options("screenshot", &options);
 
         // Generate thumbnail
         let mut thumb_harness = Harness::builder()
             .with_size(egui::Vec2::new(192.0, 192.0))
             .build_eframe(&builder);
-        thumb_harness.run();
+        thumb_harness.run_ok();
         let _ = thumb_harness.try_snapshot_options("screenshot_thumb", &options);
     }
 }

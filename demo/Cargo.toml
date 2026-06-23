@@ -28,10 +28,12 @@ log.workspace = true
 examples_utils.workspace = true
 
 # Example dependencies
+animated_signal.workspace = true
 borrow_points.workspace = true
 box_plot.workspace = true
 custom_axes.workspace = true
 custom_plot_manipulation.workspace = true
+electricity_grid.workspace = true
 filled_area.workspace = true
 heatmap.workspace = true
 histogram.workspace = true
@@ -45,7 +47,12 @@ markers.workspace = true
 performance.workspace = true
 plot_span.workspace = true
 save_plot.workspace = true
+scatterplot_matrix.workspace = true
 stacked_bar.workspace = true
+stacked_horizontal_bar.workspace = true
+stacked_lines.workspace = true
+tree_visualization.workspace = true
+treemap.workspace = true
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]

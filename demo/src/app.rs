@@ -41,10 +41,12 @@ impl DemoGallery {
 
     pub fn new(ctx: &egui::Context) -> Self {
         let examples: Vec<Box<dyn PlotExample>> = vec![
+            Box::new(animated_signal::AnimatedSignalExample::default()),
             Box::new(borrow_points::BorrowPointsExample::default()),
             Box::new(box_plot::BoxPlotExample::default()),
             Box::new(custom_axes::CustomAxesExample::default()),
             Box::new(custom_plot_manipulation::CustomPlotManipulationExample::default()),
+            Box::new(electricity_grid::ElectricityGridExample::default()),
             Box::new(filled_area::FilledAreaExample::default()),
             Box::new(heatmap::HeatmapDemo::default()),
             Box::new(histogram::HistogramExample::default()),
@@ -58,7 +60,12 @@ impl DemoGallery {
             Box::new(performance::PerformanceDemo::default()),
             Box::new(plot_span::PlotSpanDemo::default()),
             Box::new(save_plot::SavePlotExample::default()),
+            Box::new(scatterplot_matrix::ScatterplotMatrixExample::default()),
             Box::new(stacked_bar::StackedBarExample::default()),
+            Box::new(stacked_horizontal_bar::StackedHorizontalBarExample::default()),
+            Box::new(stacked_lines::StackedLinesExample::default()),
+            Box::new(tree_visualization::TreeVisualizationExample::default()),
+            Box::new(treemap::TreemapExample::default()),
         ];
         let thumbnail_textures = Self::load_thumbnails(ctx, &examples);
 

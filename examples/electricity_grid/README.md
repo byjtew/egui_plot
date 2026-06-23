@@ -1,0 +1,28 @@
+# Electricity Grid Demo
+
+A calendar heatmap of household electricity usage, inspired by Mike Bostock's
+[Electricity Usage, 2019](https://observablehq.com/@mbostock/electric-usage-2019).
+
+Every tile is one hour of the year:
+
+- **x-axis**: hour of the day (`12 AM` → `12 PM` → `12 AM`)
+- **y-axis**: day of the year, grouped by month (January at the top)
+- **color**: net power in kW on a diverging blue→white→red scale — **red** when
+  drawing from the grid, **blue** when the solar panels export back to it
+
+The data is synthetic: a baseline load with morning and evening peaks, summer
+air-conditioning and winter heating, minus solar generation that follows the
+daylight curve and the seasons.
+
+## Controls
+
+- **Solar capacity (kW)**: the installed solar power. Increasing it pushes
+  midday usage negative (blue) in the sunnier months.
+
+## Running
+
+```bash
+cargo run -p electricity_grid
+```
+
+![](screenshot.png)

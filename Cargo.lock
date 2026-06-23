@@ -176,6 +176,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "animated_signal"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
+
+[[package]]
 name = "anstream"
 version = "0.6.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -901,12 +911,14 @@ dependencies = [
 name = "demo"
 version = "0.35.0"
 dependencies = [
+ "animated_signal",
  "borrow_points",
  "box_plot",
  "custom_axes",
  "custom_plot_manipulation",
  "eframe",
  "egui",
+ "electricity_grid",
  "env_logger",
  "examples_utils",
  "filled_area",
@@ -924,7 +936,12 @@ dependencies = [
  "performance",
  "plot_span",
  "save_plot",
+ "scatterplot_matrix",
  "stacked_bar",
+ "stacked_horizontal_bar",
+ "stacked_lines",
+ "tree_visualization",
+ "treemap",
  "wasm-bindgen-futures",
  "web-sys",
 ]
@@ -1172,6 +1189,16 @@ name = "either"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
+
+[[package]]
+name = "electricity_grid"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
 
 [[package]]
 name = "emath"
@@ -3213,6 +3240,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "scatterplot_matrix"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
+
+[[package]]
 name = "scoped-tls"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3452,6 +3489,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "stacked_horizontal_bar"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
+
+[[package]]
+name = "stacked_lines"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
+
+[[package]]
 name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3678,6 +3735,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a04e24fab5c89c6a36eb8558c9656f30d81de51dfa4d3b45f26b21d61fa0a6c"
 dependencies = [
  "once_cell",
+]
+
+[[package]]
+name = "tree_visualization"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
+
+[[package]]
+name = "treemap"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
 ]
 
 [[package]]
