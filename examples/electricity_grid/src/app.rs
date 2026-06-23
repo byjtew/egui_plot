@@ -58,14 +58,23 @@ fn month_and_day(day_of_year: usize) -> (&'static str, usize) {
     (name, day_of_year - start + 1)
 }
 
+/// Phase advanced per frame. One full 0→peak→0 sweep spans 20 frames, matching
+/// the gif capture length so the exported gif loops seamlessly.
+const SWEEP_STEP: f64 = PI / 10.0;
+
 pub struct ElectricityGridExample {
-    /// Installed solar capacity in kW; higher values push midday usage negative (blue) in sunnier months.
+    /// Peak solar capacity (kW) the animation sweeps up to; set by the slider.
     solar_capacity: f64,
+    /// Animation phase driving the capacity sweep.
+    phase: f64,
 }
 
 impl Default for ElectricityGridExample {
     fn default() -> Self {
-        Self { solar_capacity: 4.0 }
+        Self {
+            solar_capacity: 6.0,
+            phase: 0.0,
+        }
     }
 }
 
@@ -76,7 +85,7 @@ fn bell(x: f64, mu: f64, sigma: f64) -> f64 {
 
 impl ElectricityGridExample {
     /// Synthetic net power in kW; positive = grid draw, negative = solar export.
-    fn net_usage(&self, day: usize, hour: usize) -> f64 {
+    fn net_usage(solar_capacity: f64, day: usize, hour: usize) -> f64 {
         let h = hour as f64;
 
         // +1 at mid-summer (~late July, day 201), -1 at mid-winter.
@@ -92,14 +101,14 @@ impl ElectricityGridExample {
 
         let daylight = (PI * (h - 6.0) / 12.0).sin().max(0.0).powf(1.3);
         let sun_season = 0.35 + 0.65 * (0.5 + 0.5 * season);
-        let solar = self.solar_capacity * sun_season * daylight;
+        let solar = solar_capacity * sun_season * daylight;
 
         consumption - solar
     }
 
     pub fn show_controls(&mut self, ui: &mut egui::Ui) -> Response {
         ui.horizontal(|ui| {
-            ui.label("Solar capacity:");
+            ui.label("Peak solar capacity:");
             ui.add(
                 egui::Slider::new(&mut self.solar_capacity, 0.0..=8.0)
                     .text("kW")
@@ -109,14 +118,20 @@ impl ElectricityGridExample {
         .response
     }
 
-    pub fn show_plot(&self, ui: &mut egui::Ui) -> Response {
+    pub fn show_plot(&mut self, ui: &mut egui::Ui) -> Response {
+        self.phase += SWEEP_STEP;
+        ui.ctx().request_repaint();
+
+        // Sweep the effective capacity over 0..=peak so the midday band breathes.
+        let solar = self.solar_capacity * 0.5 * (1.0 - self.phase.cos());
+
         // Row 0 renders at the bottom, so flip day `d` to row `DAYS - 1 - d` to put January on top.
         let mut values = Vec::with_capacity(DAYS * HOURS_PER_DAY);
         let mut max_abs = 0.0_f64;
         for row in 0..DAYS {
             let day = DAYS - 1 - row;
             for hour in 0..HOURS_PER_DAY {
-                let v = self.net_usage(day, hour);
+                let v = Self::net_usage(solar, day, hour);
                 max_abs = max_abs.max(v.abs());
                 values.push(v);
             }

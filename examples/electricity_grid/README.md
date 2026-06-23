@@ -16,8 +16,9 @@ daylight curve and the seasons.
 
 ## Controls
 
-- **Solar capacity (kW)**: the installed solar power. Increasing it pushes
-  midday usage negative (blue) in the sunnier months.
+- **Peak solar capacity (kW)**: the maximum installed solar power. The demo
+  animates the effective capacity from zero up to this value, so the midday band
+  breathes between grid draw (red) and solar export (blue).
 
 ## Running
 
@@ -25,4 +26,4 @@ daylight curve and the seasons.
 cargo run -p electricity_grid
 ```
 
-![](screenshot.png)
+![](animation.gif)
