@@ -738,6 +738,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "circular_progressbar"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui_plot",
+ "env_logger",
+ "examples_utils",
+]
+
+[[package]]
 name = "clipboard-win"
 version = "5.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -931,6 +941,7 @@ dependencies = [
  "borrow_points",
  "box_plot",
  "candlestick_chart",
+ "circular_progressbar",
  "custom_axes",
  "custom_plot_manipulation",
  "eframe",
